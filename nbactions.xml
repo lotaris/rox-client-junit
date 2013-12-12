@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	<action>
+		<actionName>CUSTOM-BuildWithRox</actionName>
+		<displayName>Build with ROX enabled</displayName>
+		<goals>
+			<goal>clean</goal>
+			<goal>install</goal>
+			<goal>-e</goal>
+		</goals>
+		<activatedProfiles>
+			<activatedProfile>rox</activatedProfile>
+		</activatedProfiles>
+	</action>
+
+	<action>
+		<actionName>CUSTOM-PrepareRelease</actionName>
+		<displayName>Prepare release</displayName>
+		<goals>
+			<goal>versions:set</goal>
+			<goal>versions:commit</goal>
+			<goal>-e</goal>
+		</goals>
+		<activatedProfiles>
+			<activatedProfile>release</activatedProfile>
+		</activatedProfiles>
+	</action>
+
+	<action>
+		<actionName>CUSTOM-BuildRelease</actionName>
+		<displayName>Build release</displayName>
+		<goals>
+			<goal>clean</goal>
+			<goal>install</goal>
+			<goal>versions:set</goal>
+			<goal>versions:commit</goal>
+			<goal>-e</goal>
+		</goals>
+		<activatedProfiles>
+			<activatedProfile>release</activatedProfile>
+		</activatedProfiles>
+	</action>
+</actions>

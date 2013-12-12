@@ -1,0 +1,10 @@
+{
+	"project": {
+		"name": "${project.artifactId}",
+		"version": "${project.version}"
+	},
+	
+	"payload": {
+		"print": true
+	}
+}
