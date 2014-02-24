@@ -7,9 +7,12 @@ import com.lotaris.rox.common.config.Configuration;
 import com.lotaris.rox.common.model.v1.ModelFactory;
 import com.lotaris.rox.common.model.v1.Test;
 import com.lotaris.rox.common.utils.Inflector;
+import com.lotaris.rox.common.utils.MetaDataBuilder;
 import com.lotaris.rox.utils.CollectionHelper;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.junit.runner.Description;
@@ -46,7 +49,7 @@ public abstract class AbstractRoxListener extends RunListener {
 	 * Store the start date of a test to measure the approximative execution
 	 * time of a each test.
 	 */
-	protected Map<String, Long> testStartDates = new HashMap<String, Long>();
+	protected Map<String, Long> testStartDates = new HashMap<>();
 
 	/**
 	 * Define if all the stack traces must be printed/written
@@ -59,10 +62,44 @@ public abstract class AbstractRoxListener extends RunListener {
 	 */
 	private String category;
 	
-	public AbstractRoxListener() {}
+	/**
+	 * List of meta data extractors
+	 */
+	private List<RoxTestMetaDataExtratctor> extractors = new ArrayList<>();
 	
+	/**
+	 * Constructor
+	 */
+	public AbstractRoxListener() {
+		extractors.add(new StandardTestMetaDataExtractor());
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param category The test category
+	 */
 	public AbstractRoxListener(String category) {
+		this();
 		this.category = category;
+	}
+
+	@Override
+	public void testStarted(Description description) throws Exception {
+		super.testStarted(description);
+		
+		for (RoxTestMetaDataExtratctor extractor : extractors) {
+			extractor.before(description);
+		}
+	}
+
+	@Override
+	public void testFinished(Description description) throws Exception {
+		super.testFinished(description);
+
+		for (RoxTestMetaDataExtratctor extractor : extractors) {
+			extractor.after(description);
+		}
 	}
 	
 	/**
@@ -70,6 +107,15 @@ public abstract class AbstractRoxListener extends RunListener {
 	 */
 	public void setFullStackTraces(Boolean fullStackTraces) {
 		this.fullStackTraces = fullStackTraces;
+	}
+	
+	/**
+	 * Add an extractor to the list of extractors
+	 * 
+	 * @param extractor Extractor to add
+	 */
+	public void addExctractor(RoxTestMetaDataExtratctor extractor) {
+		extractors.add(extractor);
 	}
 	
 	@Override
@@ -110,11 +156,11 @@ public abstract class AbstractRoxListener extends RunListener {
 	 * @return The test created from all the data available
 	 */
 	protected Test createTest(Description description, RoxableTest mAnnotation, RoxableTestClass cAnnotation, boolean passed, String message) {
-		Map<String, String> data = new HashMap<String, String>();
+		MetaDataBuilder data = new MetaDataBuilder();
 		
-		data.put("package", description.getTestClass().getPackage().getName());
-		data.put("class", description.getClassName());
-		data.put("method", description.getMethodName());
+		for (RoxTestMetaDataExtratctor extractor : extractors) {
+			data.add(extractor.extract(description));
+		}
 		
 		return ModelFactory.createTest(
 			mAnnotation.key(),
@@ -127,7 +173,7 @@ public abstract class AbstractRoxListener extends RunListener {
 			TestFlag.flagsValue(Arrays.asList(mAnnotation.flags())),
 			getTags(mAnnotation, cAnnotation),
 			getTickets(mAnnotation, cAnnotation),
-			data
+			data.toMetaData()
 		);
 	}
 	
