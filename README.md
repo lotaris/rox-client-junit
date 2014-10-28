@@ -1,6 +1,6 @@
 # rox-client-junit
 
-> Junit client for [ROX Center](https://github.com/lotaris/rox-center) written in Java.
+> JUnit client for [ROX Center](https://github.com/lotaris/rox-center) written in Java.
 
 ## Usage
 
