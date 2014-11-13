@@ -7,10 +7,36 @@
 	<groupId>com.lotaris.rox.client</groupId>
 	<artifactId>rox-client-junit</artifactId>
 	<version>2.2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>ROX Client jUnit</name>
+	<description>JUnit ROX Center client. Client able to send test results to ROX Center from JUnit tests.</description>
 
-	<packaging>jar</packaging>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Laurent Prevost</name>
+			<email>laurent.prevost@lotaris.com</email>
+			<organization>https://github.com/lotaris</organization>
+		</developer>
+		<developer>
+			<name>Simon Oulevay</name>
+			<email>simon.oulevay@lotaris.com</email>
+			<organization>https://github.com/lotaris</organization>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:lotaris/rox-client-junit.git</connection>
+		<developerConnection>scm:git:git@github.com:lotaris/rox-client-junit.git</developerConnection>
+		<url>https://github.com/lotaris/rox-client-junit</url>
+	</scm>
 
 	<properties>
 		<lotaris.rox.client.version>2.2.0</lotaris.rox.client.version>
