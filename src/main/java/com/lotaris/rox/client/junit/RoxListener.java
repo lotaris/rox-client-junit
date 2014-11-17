@@ -30,12 +30,12 @@ public class RoxListener extends AbstractRoxListener {
 	/**
 	 * Store the list of the tests executed
 	 */
-	private List<Test> results = new ArrayList<Test>();
+	private List<Test> results = new ArrayList<>();
 	/**
 	 * Store the test that fail to handle correctly the difference between test failures and test
 	 * success in the testFinished method.
 	 */
-	private Set<String> testFailures = new HashSet<String>();
+	private Set<String> testFailures = new HashSet<>();
 
 	public RoxListener() {
 	}

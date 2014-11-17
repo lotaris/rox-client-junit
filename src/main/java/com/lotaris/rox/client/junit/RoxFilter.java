@@ -22,7 +22,7 @@ public class RoxFilter extends Filter {
 	 * Default constructor aims to facilitate the reflection
 	 */
 	public RoxFilter() {
-		filters = new ArrayList<String>();
+		filters = new ArrayList<>();
 	};
 	
 	public RoxFilter(String[] filters) {
@@ -30,7 +30,7 @@ public class RoxFilter extends Filter {
 	}
 	
 	/**
-	 * @param filters Add a filter
+	 * @param filter Add a filter
 	 */
 	public void addFilter(String filter) {
 		if (filters != null && filter != null && !filter.isEmpty() && !filters.contains(filter)) {
