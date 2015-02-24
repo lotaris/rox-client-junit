@@ -65,7 +65,7 @@ public abstract class AbstractRoxListener extends RunListener {
 	/**
 	 * List of meta data extractors
 	 */
-	private List<RoxTestMetaDataExtratctor> extractors = new ArrayList<>();
+	private final List<RoxTestMetaDataExtratctor> extractors = new ArrayList<>();
 	
 	/**
 	 * Constructor
@@ -163,11 +163,11 @@ public abstract class AbstractRoxListener extends RunListener {
 		}
 		
 		return ModelFactory.createTest(
-			mAnnotation.key(),
+			!mAnnotation.key().isEmpty() ? mAnnotation.key() : getTechnicalName(description),
 			getName(description, mAnnotation),
 			getCategory(cAnnotation, mAnnotation),
 			System.currentTimeMillis(),
-			System.currentTimeMillis() - testStartDates.get(mAnnotation.key()),
+			System.currentTimeMillis() - testStartDates.get(getTechnicalName(description)),
 			message,
 			passed,
 			TestFlag.flagsValue(Arrays.asList(mAnnotation.flags())),
@@ -285,5 +285,15 @@ public abstract class AbstractRoxListener extends RunListener {
 		}
 		
 		return sb.toString();
+	}
+	
+	/**
+	 * Build the technical name
+	 * 
+	 * @param description The description to retrieve the unique name of a test
+	 * @return The technical name
+	 */
+	protected String getTechnicalName(Description description) {
+		return description.getClassName() + "." + description.getMethodName();
 	}
 }

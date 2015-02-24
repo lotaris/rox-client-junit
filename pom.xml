@@ -6,7 +6,7 @@
 
 	<groupId>com.lotaris.rox.client</groupId>
 	<artifactId>rox-client-junit</artifactId>
-	<version>2.2.1</version>
+	<version>2.2.2</version>
 	<packaging>jar</packaging>
 
 	<name>ROX Client jUnit</name>
@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>com.lotaris.rox.client</groupId>
 			<artifactId>rox-client-java</artifactId>
-			<version>2.2.1</version>
+			<version>2.2.2</version>
 		</dependency>
 
 		<dependency>
